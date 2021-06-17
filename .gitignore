@@ -4,5 +4,5 @@ admin/products/migrations/
 admin/admin/__pycache__/
 main/migrations/
 main/__pycache__/
+main/.dbdata/
 react-crud/node_modules/
-main/
