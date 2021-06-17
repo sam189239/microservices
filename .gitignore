@@ -1,0 +1,8 @@
+admin/admin/__pycache__/
+admin/.dbdata/
+admin/products/migrations/
+admin/admin/__pycache__/
+main/migrations/
+main/__pycache__/
+react-crud/node_modules/
+main/
