@@ -27,8 +27,8 @@ services:
     environment:
       MYSQL_DATABASE: main
       MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: MyRootPass1@
+      MYSQL_ROOT_PASSWORD: MyRootPass1@
     volumes:
       - .dbdata:/var/lib/mysql
     ports:
