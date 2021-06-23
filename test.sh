@@ -131,3 +131,7 @@ echo "---------------- Built main-------------------"
 
 #docker restart 1
 #sudo chmod 666 /var/run/docker.sock
+
+#curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+#. ~/.nvm/nvm.sh
+#nvm install node
