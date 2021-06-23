@@ -130,3 +130,4 @@ echo "---------------- Built main-------------------"
 #INSERT INTO products_user (id) VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10);
 
 #docker restart 1
+#sudo chmod 666 /var/run/docker.sock
