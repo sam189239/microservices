@@ -1,5 +1,11 @@
 #!bin/sh
 
+
+# yum update -y
+# yum install git -y
+# git --version
+# git clone https://github.com/mahidharvarma9/microservices.git
+
 yum update -y
 amazon-linux-extras install docker -y
 service docker start
@@ -7,9 +13,9 @@ usermod -a -G docker ec2-user
 
 echo "----------------Basic cmds executed-------------------"
 #git
-yum update -y
-yum install git -y
-git --version
+# yum update -y
+# yum install git -y
+# git --version
 
 echo "----------------Git installed-------------------"
 ##docker-compose
@@ -69,7 +75,7 @@ echo "----------------sql setup completed-------------------"
 
 ##running project
 
-git clone https://github.com/mahidharvarma9/microservices.git
+#git clone https://github.com/mahidharvarma9/microservices.git
 
 echo "----------------git clone completed-------------------"
 
