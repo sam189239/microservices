@@ -11,7 +11,7 @@ const ProductsEdit = (props: PropsWithRef<any>) => {
     useEffect(() => {
         (
             async () => {
-                const response = await fetch(`http://localhost:8000/api/products/${props.match.params.id}`);
+                const response = await fetch(`http://adminhost:8000/api/products/${props.match.params.id}`);
 
                 const product: Product = await response.json();
 
@@ -24,7 +24,7 @@ const ProductsEdit = (props: PropsWithRef<any>) => {
     const submit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
-        await fetch(`http://localhost:8000/api/products/${props.match.params.id}`, {
+        await fetch(`http://adminhost:8000/api/products/${props.match.params.id}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
