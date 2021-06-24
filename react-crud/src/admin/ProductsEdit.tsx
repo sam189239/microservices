@@ -2,6 +2,7 @@ import React, {PropsWithRef, SyntheticEvent, useEffect, useState} from 'react';
 import Wrapper from "./Wrapper";
 import {Redirect} from 'react-router-dom';
 import {Product} from "../interfaces/product";
+import * as Constants from './constants'
 
 const ProductsEdit = (props: PropsWithRef<any>) => {
     const [title, setTitle] = useState('');
