@@ -126,15 +126,15 @@ echo "---------------- Built main-------------------"
 
 #installing react
 
- cd microservices/react-crud
- curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
- . ~/.nvm/nvm.sh
- nvm install node
-# rm -rf node_modules
-# rm -rf package-lock.json
-# npm install
+#  cd microservices/react-crud
+#  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+#  . ~/.nvm/nvm.sh
+#  nvm install node
+# # rm -rf node_modules
+# # rm -rf package-lock.json
+# # npm install
 
-echo "---------------- Built node-------------------"
+# echo "---------------- Built node-------------------"
 
 ##list of commands for dockers
  
