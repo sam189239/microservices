@@ -13,7 +13,17 @@ amazon-linux-extras install docker -y
 service docker start
 usermod -a -G docker ec2-user
 
-echo "----------------Basic cmds executed-------------------"
+yum update -y
+yum install -y awslogs
+# Edit the /etc/awslogs/awslogs.conf file to configure the logs to track. For more information about editing this file, see CloudWatch Logs agent reference.
+
+# By default, the /etc/awslogs/awscli.conf points to the us-east-1 Region. To push your logs to a different Region, edit the awscli.conf file and specify that Region.
+# service docker start
+service awslogs start
+systemctl start awslogsd
+chkconfig awslogs on
+
+echo "----------------Basic cmds and cloudwatch executed-------------------"
 #git
 # yum update -y
 # yum install git -y
