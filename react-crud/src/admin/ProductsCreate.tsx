@@ -1,7 +1,7 @@
 import React, {SyntheticEvent, useState} from 'react';
 import Wrapper from "./Wrapper";
 import {Redirect} from 'react-router-dom';
-import * as Constants from './constants'
+import * as Constants from '../constants'
 
 const ProductsCreate = () => {
     const [title, setTitle] = useState('');
@@ -11,7 +11,7 @@ const ProductsCreate = () => {
     const submit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
-        await fetch('http://'+adminhost+':8000/api/products', {
+        await fetch('http://'+Constants.adminhost+':8000/api/products', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
