@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Product} from "../interfaces/product";
-import * as Constants from './constants'
+import * as Constants from '../constants'
 
 const Main = () => {
     const [products, setProducts] = useState([] as Product[]);
@@ -8,7 +8,7 @@ const Main = () => {
     useEffect(() => {
         (
             async () => {
-                const response = await fetch('http://'+mainhost+':8001/api/products');
+                const response = await fetch('http://'+Constants.mainhost+':8001/api/products');
 
                 const data = await response.json();
 
@@ -18,7 +18,7 @@ const Main = () => {
     }, []);
 
     const like = async (id: number) => {
-        await fetch('http://'+mainhost+`:8001/api/products/${id}/like`, {
+        await fetch('http://'+Constants.mainhost+`:8001/api/products/${id}/like`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'}
         });
