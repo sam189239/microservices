@@ -6,7 +6,7 @@
 # git --version
 # git clone https://github.com/mahidharvarma9/microservices.git
 
-#sudo sh  /microservices/test.sh
+# sudo sh  /microservices/main.sh
 
 yum update -y
 amazon-linux-extras install docker -y
