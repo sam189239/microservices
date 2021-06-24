@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import Wrapper from "./Wrapper"
 import {Product} from "../interfaces/product"
 import {Link} from "react-router-dom";
-import * as Constants from './constants'
+import * as Constants from '../constants'
 
 const Products = () => {
     const [products, setProducts] = React.useState([]);
     useEffect(() => {
         (
             async () => {
-                const response = await fetch('http://'+adminhost+':8000/api/products');
+                const response = await fetch('http://'+Constants.adminhost+':8000/api/products');
 
                 const data =await response.json();
 
@@ -21,7 +21,7 @@ const Products = () => {
     
     const del = async (id: number) =>{
         if(window.confirm("Are you sure you want to delete this product?")){
-            await fetch('http://'+adminhost+`:8000/api/products/${id}`,{
+            await fetch('http://'+Constants.adminhost+`:8000/api/products/${id}`,{
                 method: 'DELETE'
             });
             setProducts(products.filter((p: Product) => p.id!=id));
@@ -30,7 +30,7 @@ const Products = () => {
 
     const create_user = async () =>{
         if(window.confirm("Are you sure you want to create User?")){
-            await fetch('http://'+adminhost+':8000/api/user',{
+            await fetch('http://'+Constants.adminhost+':8000/api/user',{
                 method: 'POST'
             });
         }
