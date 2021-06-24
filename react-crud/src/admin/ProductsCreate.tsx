@@ -1,6 +1,7 @@
 import React, {SyntheticEvent, useState} from 'react';
 import Wrapper from "./Wrapper";
 import {Redirect} from 'react-router-dom';
+import * as Constants from './constants'
 
 const ProductsCreate = () => {
     const [title, setTitle] = useState('');
