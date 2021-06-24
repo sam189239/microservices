@@ -86,11 +86,12 @@ echo "----------------git clone completed-------------------"
 # #docker-compose up -d 
 
 # echo "---------------- Built admin-------------------"
-# cd ../main
-# docker-compose build
-# #docker-compose up -d 
+cd ../main
+docker-compose build
+#docker-compose up -d 
 
-# echo "---------------- Built main-------------------"
+echo "---------------- Built main-------------------"
+
 
 ## migration for admin
 #docker-compose exec backend sh
@@ -109,6 +110,22 @@ echo "----------------git clone completed-------------------"
 #pass:Ubuntu1@
 
 ## create a migrations folder with __init__.py
+
+
+
+
+#installing react
+
+cd microservices/react-crud
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+. ~/.nvm/nvm.sh
+nvm install node
+rm -rf node_modules
+rm -rf package-lock.json
+npm init
+npm install
+
+echo "---------------- Built raect-------------------"
 
 ##list of commands for dockers
  
