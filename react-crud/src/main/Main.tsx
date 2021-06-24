@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Product} from "../interfaces/product";
+import * as Constants from './constants'
 
 const Main = () => {
     const [products, setProducts] = useState([] as Product[]);
