@@ -81,11 +81,11 @@ echo "----------------sql setup completed-------------------"
 
 echo "----------------git clone completed-------------------"
 
-# cd microservices/admin
-# docker-compose build
-# #docker-compose up -d 
+cd microservices/admin
+docker-compose build
+#docker-compose up -d 
 
-# echo "---------------- Built admin-------------------"
+echo "---------------- Built admin-------------------"
 # cd ../main
 # docker-compose build
 # #docker-compose up -d 
