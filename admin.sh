@@ -147,3 +147,5 @@ echo "---------------- Built admin-------------------"
 #. ~/.nvm/nvm.sh
 #nvm install node
 
+sudo systemctl start docker
+sudo chmod 666 /var/run/docker.sock
