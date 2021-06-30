@@ -8,7 +8,7 @@ const Main = () => {
     useEffect(() => {
         (
             async () => {
-                const response = await fetch('http://'+Constants.mainhost+':8000/api/products');
+                const response = await fetch('http://'+Constants.adminhost+':8000/api/products');
 
                 const data = await response.json();
 
