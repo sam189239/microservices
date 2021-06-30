@@ -99,8 +99,8 @@ echo "----------------git clone completed-------------------"
 # #docker-compose up -d 
 
 # echo "---------------- Built admin-------------------"
-cd ../main
-docker-compose build
+cd ./microservices/main
+docker-compose build -d
 #docker-compose up -d 
 
 echo "---------------- Built main-------------------"
