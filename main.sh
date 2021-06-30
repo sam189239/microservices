@@ -77,7 +77,7 @@ echo "----------------sql installed-------------------"
 #BASH_QUERY
 
 # Set up a batch file with the SQL commands
-echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyRootPass1@';CREATE USER 'root'@'%' IDENTIFIED BY 'MyRootPass1@';GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;FLUSH PRIVILEGES;SELECT user,host FROM mysql.user;" > setup_sql.sql
+echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyRootPass1@';CREATE USER 'root'@'%' IDENTIFIED BY 'MyRootPass1@';GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;FLUSH PRIVILEGES;SELECT user,host FROM mysql.user;CREATE USER 'mysqld_exporter'@'localhost' IDENTIFIED BY 'password' WITH MAX_USER_CONNECTIONS 3;GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'mysqld_exporter'@'localhost';FLUSH PRIVILEGES;" > setup_sql.sql
 
 # Log in to the server with the temporary password, and pass the SQL file to it.
 mysql -u root --password="$root_temp_pass" --connect-expired-password < setup_sql.sql
@@ -120,6 +120,15 @@ sudo systemctl enable node_exporter
 #http://<server-IP>:9100/metrics
 
 echo "---------------- Installed node_exporter-------------------"
+
+#sql_exporter installation
+cd
+wget https://github.com/prometheus/mysqld_exporter/releases/download/v0.11.0/mysqld_exporter-0.11.0.linux-amd64.tar.gz
+tar -xvf mysqld_exporter-0.11.0.linux-amd64.tar.gz
+useradd mysqld_exporter
+cp ~/microservices/mysqld_exporter.service ~/tmp/etc/systemd/system/mysqld_exporter.service
+
+echo "---------------- Installed mysqld_exporter-------------------"
 
 
 ## migration for admin
