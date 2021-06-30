@@ -37,6 +37,10 @@ chmod +x /usr/local/bin/docker-compose
 
 docker-compose version
 
+
+systemctl start docker
+chmod 666 /var/run/docker.sock
+
 echo "----------------Docker-compose installed-------------------"
 ## adding sql
 
@@ -146,6 +150,3 @@ echo "---------------- Built admin-------------------"
 #curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 #. ~/.nvm/nvm.sh
 #nvm install node
-
-systemctl start docker
-chmod 666 /var/run/docker.sock
