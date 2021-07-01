@@ -80,7 +80,7 @@ echo "----------------sql installed-------------------"
 #BASH_QUERY
 
 # Set up a batch file with the SQL commands
-echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyRootPass1@';CREATE USER 'root'@'%' IDENTIFIED BY 'MyRootPass1@';GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;FLUSH PRIVILEGES;SELECT user,host FROM mysql.user;" > setup_sql.sql
+echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyRootPass1@';CREATE USER 'root'@'%' IDENTIFIED BY 'MyRootPass1@';GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;FLUSH PRIVILEGES;CREATE USER 'mysqld_exporter'@'localhost' IDENTIFIED BY 'MyRootPass1@' WITH MAX_USER_CONNECTIONS 3;GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'mysqld_exporter'@'localhost';FLUSH PRIVILEGES;SELECT user,host FROM mysql.user;" > setup_sql.sql
 
 # Log in to the server with the temporary password, and pass the SQL file to it.
 mysql -u root --password="$root_temp_pass" --connect-expired-password < setup_sql.sql
