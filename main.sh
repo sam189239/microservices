@@ -130,7 +130,10 @@ echo "---------------- Installed node_exporter-------------------"
 # useradd mysqld_exporter
 #mv mysqld_exporter-0.11.0.linux-amd64/mysqld_exporter /usr/bin/
 # cp ~/microservices/mysqld_exporter.service ~/tmp/etc/systemd/system/mysqld_exporter.service
- #port 9104
+# systemctl start mysqld_exporter
+# systemctl status mysqld_exporter 
+# systemctl enable mysqld_exporter 
+#port 9104
 # echo "---------------- Installed mysqld_exporter-------------------"
 
 
