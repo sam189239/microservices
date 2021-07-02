@@ -128,8 +128,9 @@ echo "---------------- Installed node_exporter-------------------"
 # wget https://github.com/prometheus/mysqld_exporter/releases/download/v0.11.0/mysqld_exporter-0.11.0.linux-amd64.tar.gz
 # tar -xvf mysqld_exporter-0.11.0.linux-amd64.tar.gz
 # useradd mysqld_exporter
+#mv mysqld_exporter-0.11.0.linux-amd64/mysqld_exporter /usr/bin/
 # cp ~/microservices/mysqld_exporter.service ~/tmp/etc/systemd/system/mysqld_exporter.service
-
+ #port 9104
 # echo "---------------- Installed mysqld_exporter-------------------"
 
 
