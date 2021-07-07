@@ -16,6 +16,26 @@ from prometheus_client.core import CollectorRegistry
 from prometheus_client import Summary, Counter, Histogram, Gauge
 import time
 
+import os
+from datetime import datetime
+import time
+import sys
+
+from opencensus.trace.tracer import Tracer
+from opencensus.trace import time_event as time_event_module
+from opencensus.ext.zipkin.trace_exporter import ZipkinExporter
+from opencensus.trace.samplers import AlwaysOnSampler
+
+# 1a. Setup the exporter
+ze = ZipkinExporter(service_name="test_main-api-tracing",
+                                host_name='zipkins',
+                                port=9411,
+                                endpoint='/api/v2/spans')
+# 1b. Set the tracer to use the exporter
+# 2. Configure 100% sample rate, otherwise, few traces will be sampled.
+# 3. Get the global singleton Tracer object
+tracer = Tracer(exporter=ze, sampler=AlwaysOnSampler())
+
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql://root:MyRootPass1@@db/main'
@@ -76,13 +96,14 @@ def requests_count():
 
 @app.route('/api/products', methods=['GET'])
 def index():
-    start = time.time()
-    # time.sleep(2)
-    r = jsonify(Product.query.all())
-    graphs['product_get_count'].inc()
-    end = time.time()
-    graphs['response_time_productget'].observe(end-start)
-    return r
+    with tracer.span(name="get_products") as span:
+        start = time.time()
+        # time.sleep(2)
+        r = jsonify(Product.query.all())
+        graphs['product_get_count'].inc()
+        end = time.time()
+        graphs['response_time_productget'].observe(end-start)
+        return r
 
 @app.route('/api/products', methods=['DELETE'])
 def delete():
@@ -98,26 +119,28 @@ def delete():
 
 @app.route('/api/products/<int:id>/like', methods=['POST'])
 def like(id):
-    start = time.time()
-    graphs['like_count'].inc()
-    req=requests.get('http://172.18.0.1:8000/api/user')
-    json = req.json()
+    with tracer.span(name="inside_like") as span:
+        with tracer.span(name="calling_admin") as span:
+            start = time.time()
+            graphs['like_count'].inc()
+            req=requests.get('http://172.18.0.1:8000/api/user')
+            json = req.json()
+    with tracer.span(name="updating_like") as span:
+        try:
 
-    try:
-        productUser = ProductUser(user_id=json['id'], product_id=id)
-        db.session.add(productUser)
-        db.session.commit()
+            productUser = ProductUser(user_id=json['id'], product_id=id)
+            db.session.add(productUser)
+            db.session.commit()
 
-        publish('product_liked',id)
-    except:
-        abort(400, 'You already liked this product')
+            publish('product_liked', id)
+        except:
+
+            abort(400, 'You already liked this product')
+        end = time.time()
+        return jsonify({
+        'message': 'success'
+        })
     
-    end = time.time()
-    graphs['response_time_likes'].observe(end-start)
-    return jsonify({
-        'message': 'success',
-        'id': json['id']
-    })
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
