@@ -34,11 +34,11 @@ services:
       - 33066:3306
       
       
-  zipkins:
-    image: openzipkin/zipkin
-    ports:
-      # Port used for the Zipkin UI and HTTP Api
-      - 9411:9411
+#   zipkins:
+#     image: openzipkin/zipkin
+#     ports:
+#       # Port used for the Zipkin UI and HTTP Api
+#       - 9411:9411
       
             
 #networks: 
