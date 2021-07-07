@@ -5,3 +5,5 @@ django-mysql==3.9
 django-cors-headers==3.5.0
 pika==1.1.0
 django-prometheus
+opencensus
+opencensus-ext-zipkin
