@@ -26,9 +26,11 @@ from opencensus.trace import time_event as time_event_module
 from opencensus.ext.zipkin.trace_exporter import ZipkinExporter
 from opencensus.trace.samplers import AlwaysOnSampler
 
+zipkins_host=""
+admin_host=""
 # 1a. Setup the exporter
 ze = ZipkinExporter(service_name="test_main-api-tracing",
-                                host_name='zipkins',
+                                host_name=zipkins_host,
                                 port=9411,
                                 endpoint='/api/v2/spans')
 # 1b. Set the tracer to use the exporter
@@ -123,7 +125,7 @@ def like(id):
         with tracer.span(name="calling_admin") as span:
             start = time.time()
             graphs['like_count'].inc()
-            req=requests.get('http://172.18.0.1:8000/api/user')
+            req=requests.get('http://'+admin_host+':8000/api/user')
             json = req.json()
     with tracer.span(name="updating_like") as span:
         try:
