@@ -1,21 +1,24 @@
-from flask import Flask, jsonify, abort#, 
-from flask import request as flask_req
-from flask.helpers import stream_with_context
-from flask.wrappers import Response
-from werkzeug.wrappers import request
-from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
-from sqlalchemy import UniqueConstraint
 from dataclasses import dataclass
+from flask import Flask, jsonify, abort
+from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import UniqueConstraint
 import requests
+
 from producer import publish
 
-from prometheus_flask_exporter import PrometheusMetrics
-import prometheus_client
-from prometheus_client.core import CollectorRegistry
-from prometheus_client import Summary, Counter, Histogram, Gauge
-import time
+##prometheus
+from prometheus_client import make_wsgi_app
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
+from werkzeug.serving import run_simple
+from flask_prometheus_metrics import register_metrics
+from flask import Blueprint
 
+
+
+
+
+##prometheus
 import os
 from datetime import datetime
 import time
@@ -25,6 +28,7 @@ from opencensus.trace.tracer import Tracer
 from opencensus.trace import time_event as time_event_module
 from opencensus.ext.zipkin.trace_exporter import ZipkinExporter
 from opencensus.trace.samplers import AlwaysOnSampler
+
 
 zipkins_host=""
 admin_host=""
@@ -37,14 +41,17 @@ ze = ZipkinExporter(service_name="test_main-api-tracing",
 # 2. Configure 100% sample rate, otherwise, few traces will be sampled.
 # 3. Get the global singleton Tracer object
 tracer = Tracer(exporter=ze, sampler=AlwaysOnSampler())
+#
+# Constants
+#
 
-
+CONFIG = {"version": "v0.1.2", "config": "staging"}
+MAIN = Blueprint("main", __name__)
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql://root:MyRootPass1@@db/main'
 CORS(app)
 
 db = SQLAlchemy(app)
-
 
 @dataclass
 class Product(db.Model):
@@ -66,48 +73,12 @@ class ProductUser(db.Model):
     UniqueConstraint('user_id', 'product_id', name='user_product_unique')
 
 
-
-
-_INF = float("inf")
-graphs = {}
-graphs['c'] = Counter('python_request_operations_total', 'The total number of processed requests')
-graphs['h'] = Histogram('python_request_duration_seconds', 'Histogram for the duration in seconds.', buckets=(1,2,5,6,10,_INF))
-graphs['like_count'] = Counter('like_count', 'The number of likes')
-graphs['response_time_productget'] = Histogram('product_get_response', 'Histogram for the duration in seconds.', buckets=(1,2,5,6,10,_INF))
-graphs['response_time_likes'] = Histogram('like_response', 'Histogram for the duration in seconds.', buckets=(1,2,5,6,10,_INF))
-graphs['product_get_count'] = Counter('product_get_count', 'The number of get requests for Products')
-
-
-@app.route('/')
-def hello():
-    start = time.time()
-    graphs['c'].inc()
-    time.sleep(0.600)
-    end=time.time()
-    graphs['h'].observe(end-start)
-    return "Hello!"
-
-@app.route("/metrics")
-def requests_count():
-    res = []
-    for k,v in graphs.items():
-        res.append(prometheus_client.generate_latest(v))
-    return Response(res, mimetype="text/plain")
-    
-    
-
-@app.route('/api/products', methods=['GET'])
+@MAIN.route('/api/products', methods=['GET'])
 def index():
     with tracer.span(name="get_products") as span:
-        start = time.time()
-        # time.sleep(2)
-        r = jsonify(Product.query.all())
-        graphs['product_get_count'].inc()
-        end = time.time()
-        graphs['response_time_productget'].observe(end-start)
-        return r
+            return jsonify(Product.query.all())
 
-@app.route('/api/products', methods=['DELETE'])
+@MAIN.route('/api/products', methods=['DELETE'])
 def delete():
     db.session.query(Product).delete()
     db.session.commit()
@@ -118,14 +89,12 @@ def delete():
     return jsonify({
         'message': 'success'
     })
-
-@app.route('/api/products/<int:id>/like', methods=['POST'])
+    
+@MAIN.route('/api/products/<int:id>/like', methods=['POST'])
 def like(id):
     with tracer.span(name="inside_like") as span:
         with tracer.span(name="calling_admin") as span:
-            start = time.time()
-            graphs['like_count'].inc()
-            req=requests.get('http://'+admin_host+':8000/api/user')
+            req = requests.get('http://172.21.0.1:8000/api/user')
             json = req.json()
     with tracer.span(name="updating_like") as span:
         try:
@@ -138,11 +107,69 @@ def like(id):
         except:
 
             abort(400, 'You already liked this product')
-        end = time.time()
+
         return jsonify({
         'message': 'success'
         })
-    
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+
+##prom
+
+
+
+#
+# Main app
+#
+
+
+
+def register_blueprints(app):
+    """
+    Register blueprints to the app
+    """
+    app.register_blueprint(MAIN)
+
+
+def create_app(config):
+    """
+    Application factory
+    """
+    
+    register_blueprints(app)
+    register_metrics(app, app_version=config["version"], app_config=config["config"])
+    return app
+
+
+#
+# Dispatcher
+#
+
+
+def create_dispatcher() -> DispatcherMiddleware:
+    """
+    App factory for dispatcher middleware managing multiple WSGI apps
+    """
+    main_app = create_app(config=CONFIG)
+    return DispatcherMiddleware(main_app.wsgi_app, {"/metrics": make_wsgi_app()})
+
+
+#
+# Run
+#
+
+if __name__ == "__main__":
+    run_simple(
+        "0.0.0.0",
+        8001,
+        create_dispatcher(),
+        use_reloader=True,
+        use_debugger=True,
+        use_evalex=True,
+    )
+
+##prom
+
+
+#if __name__ == '__main__':
+#    app.run(debug=True, host='0.0.0.0')
+#    run_simple(hostname="0.0.0.0", port=5000, application=dispatcher)
