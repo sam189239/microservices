@@ -2,7 +2,7 @@ import pika, json
 
 from main import Product, db
 
-params = pika.URLParameters('amqps://oenwuqee:91pzsvj2f941LHWu7ZY0-L9D5ojQ_v1K@snake.rmq2.cloudamqp.com/oenwuqee')
+params = pika.URLParameters('amqps://oenwuqee:91pzsvj2f941LHWu7ZY0-L9D5ojQ_v1K@snake.rmq2.cloudamqp.com/oenwuqee?heartbeat=65535')
 
 connection = pika.BlockingConnection(params)
 
@@ -37,7 +37,6 @@ def callback(ch, method, properties, body):
 
 
 channel.basic_consume(queue='main', on_message_callback=callback, auto_ack=True)
-
 print('Started Consuming')
 
 channel.start_consuming()
