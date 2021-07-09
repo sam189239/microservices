@@ -5,9 +5,10 @@ django.setup()
 
 from products.models import Product
 
-params1 = pika.URLParameters('amqps://oenwuqee:91pzsvj2f941LHWu7ZY0-L9D5ojQ_v1K@snake.rmq2.cloudamqp.com/oenwuqee')
+params1 = pika.URLParameters('amqps://oenwuqee:91pzsvj2f941LHWu7ZY0-L9D5ojQ_v1K@snake.rmq2.cloudamqp.com/oenwuqee?heartbeat=65535')
 
 connection = pika.BlockingConnection(params1)
+
 
 channel = connection.channel()
 
@@ -25,7 +26,6 @@ def callback(ch, method, properties, body):
 
 
 channel.basic_consume(queue='admin', on_message_callback=callback, auto_ack=True)
-
 print('Started Consuming')
 
 channel.start_consuming()
