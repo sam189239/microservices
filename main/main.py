@@ -93,24 +93,29 @@ def delete():
 @MAIN.route('/api/products/<int:id>/like', methods=['POST'])
 def like(id):
     with tracer.span(name="inside_like") as span:
-        with tracer.span(name="calling_admin") as span:
+        with tracer.span(name="calling_admin_for_user") as span:
             req = requests.get('http://172.21.0.1:8000/api/user')
             json = req.json()
-    with tracer.span(name="updating_like") as span:
-        try:
+        with tracer.span(name="updating_like") as span:
+            try:
+                with tracer.span(name="search_product_user_db") as span:
+                    productUser = ProductUser(user_id=json['id'], product_id=id)
+                    
+                    with tracer.span(name="db_add_productuser") as span:
+                        db.session.add(productUser)
+                        
+                        with tracer.span(name="db_add_product_user_commit") as span:
+                            db.session.commit()
 
-            productUser = ProductUser(user_id=json['id'], product_id=id)
-            db.session.add(productUser)
-            db.session.commit()
+                with tracer.span(name="publish_like") as span:
+                    publish('product_liked', id)
+            except:
 
-            publish('product_liked', id)
-        except:
+                abort(400, 'You already liked this product')
 
-            abort(400, 'You already liked this product')
-
-        return jsonify({
-        'message': 'success'
-        })
+            return jsonify({
+            'message': 'success'
+            })
 
 
 ##prom
