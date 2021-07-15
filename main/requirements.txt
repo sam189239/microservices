@@ -11,3 +11,11 @@ prometheus_client
 prometheus-flask-exporter
 opencensus
 opencensus-ext-zipkin
+opentelemetry-exporter-zipkin
+opencensus-ext-requests
+opencensus-ext-threading
+opencensus-ext-dbapi
+opencensus-ext-flask
+opencensus-ext-mysql
+opencensus-ext-sqlalchemy
+opencensus-ext-zipkin
