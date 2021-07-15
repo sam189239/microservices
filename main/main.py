@@ -127,7 +127,7 @@ def like(id):
         tracer.add_attribute_to_current_span(HTTP_PATH, flask.request.path)
         tracer.add_attribute_to_current_span(HTTP_URL, str(flask.request.url))
         with tracer.span(name="calling_admin_for_user") as span:
-            req = requests.get('http://172.21.0.1:8000/api/user')
+            req = requests.get('http://'+admin_host+'/api/user')
             json = req.json()
         with tracer.span(name="updating_like") as span:
             try:
