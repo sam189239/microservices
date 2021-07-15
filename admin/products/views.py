@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 
 from .models import Product, User
 from .producer import publish
-from .serializers import ProductSerializer
+from .serializers import ProductSerializer, UserSerializer
 import random
 
 import os
