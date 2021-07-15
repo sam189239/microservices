@@ -51,11 +51,20 @@ ze = ZipkinExporter(service_name="test_main-api-tracing_manual_instrumentation",
 #tracer = Tracer(exporter=ze, sampler=AlwaysOnSampler())
 #
 
+
+
+########################################################################################################
+CONFIG = {"version": "v0.1.2", "config": "staging"}
+MAIN = Blueprint("main", __name__)
+app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql://root:MyRootPass1@@db/main'
+CORS(app)
+
 #Automatic Instumentation
 #Integrations for SQLalchemy and Requests
 INTEGRATIONS = ['mysql', 'sqlalchemy', 'requests']
 #
-middleware = FlaskMiddleware(app, exporter = ZipkinExporter(service_name="test_main-api-tracing-automatic-instrumentation",host_name='zipkins_host', port=9411, endpoint='/api/v2/spans'),  sampler=AlwaysOnSampler(),)
+middleware = FlaskMiddleware(app, exporter = ZipkinExporter(service_name="test_main-api-tracing-automatic-instrumentation",host_name='+zipkins_host+', port=9411, endpoint='/api/v2/spans'),  sampler=AlwaysOnSampler(),)
 config_integration.trace_integrations(INTEGRATIONS)
 #opencenesus Manual attribute helpers
 HTTP_HOST = attributes_helper.COMMON_ATTRIBUTES['HTTP_HOST']
@@ -64,13 +73,6 @@ HTTP_PATH = attributes_helper.COMMON_ATTRIBUTES['HTTP_PATH']
 HTTP_ROUTE = attributes_helper.COMMON_ATTRIBUTES['HTTP_ROUTE']
 HTTP_URL = attributes_helper.COMMON_ATTRIBUTES['HTTP_URL']
 HTTP_STATUS_CODE = attributes_helper.COMMON_ATTRIBUTES['HTTP_STATUS_CODE']
-
-########################################################################################################
-CONFIG = {"version": "v0.1.2", "config": "staging"}
-MAIN = Blueprint("main", __name__)
-app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql://root:MyRootPass1@@db/main'
-CORS(app)
 
 db = SQLAlchemy(app)
 
