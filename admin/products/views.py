@@ -73,9 +73,17 @@ class ProductViewSet(viewsets.ViewSet):
 
 
 class UserAPIView(APIView):
-    def get(self, _):
+    def get_user(self, request):
         users = User.objects.all()
         user = random.choice(users)
         return Response({
-            'id': user.id
+            'id':user.id
         })
+
+    def create_user(self, request): 
+        serializer = UserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        # publish('user_created',serializer.data)
+        print("New user Created")
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
