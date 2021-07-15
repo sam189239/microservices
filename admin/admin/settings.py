@@ -23,7 +23,7 @@ SECRET_KEY = 'jr_!&njk1=$yoehd$)2tg8jouv!ig5wrrw%ka_-vjj@1as1bv@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-zipkins_host = ''
+zipkins_host = ""
 
 ALLOWED_HOSTS = ['*']
 
@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'admin.wsgi.application'
 OPENCENSUS = {
     'TRACE': {
         'SAMPLER': 'opencensus.trace.samplers.ProbabilitySampler(rate=1)',
-        'EXPORTER': '''opencensus.ext.zipkin.trace_exporter.ZipkinExporter(service_name="test_admin-api-tracing", host_name="zipkins_host", port=9411, endpoint="/api/v2/spans")''',
+        'EXPORTER': '''opencensus.ext.zipkin.trace_exporter.ZipkinExporter(service_name="test_admin-api-tracing", host_name=zipkins_host, port=9411, endpoint="/api/v2/spans")''',
     }
 }
 
