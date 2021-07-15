@@ -96,6 +96,7 @@ class ProductUser(db.Model):
 
 @MAIN.route('/api/products', methods=['GET'])
 def index():
+    #COmment the following line for auto_instrumentation
     tracer = Tracer(exporter=ze, sampler=AlwaysOnSampler())
     with tracer.span(name="get_products") as span:
         tracer.add_attribute_to_current_span(HTTP_HOST, flask.request.host)
@@ -118,6 +119,7 @@ def delete():
     
 @MAIN.route('/api/products/<int:id>/like', methods=['POST'])
 def like(id):
+    #COmment the following line for auto_instrumentation
     tracer = Tracer(exporter=ze, sampler=AlwaysOnSampler())
     with tracer.span(name="inside_like") as span:
         tracer.add_attribute_to_current_span(HTTP_HOST, flask.request.host)
