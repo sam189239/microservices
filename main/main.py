@@ -200,7 +200,7 @@ def create_dispatcher() -> DispatcherMiddleware:
 if __name__ == "__main__":
     run_simple(
         "0.0.0.0",
-        8001,
+        5000,
         create_dispatcher(),
         use_reloader=True,
         use_debugger=True,
