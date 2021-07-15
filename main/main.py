@@ -64,7 +64,7 @@ CORS(app)
 #Integrations for SQLalchemy and Requests
 INTEGRATIONS = ['mysql', 'sqlalchemy', 'requests']
 #
-middleware = FlaskMiddleware(app, exporter = ZipkinExporter(service_name="test_main-api-tracing-automatic-instrumentation",host_name=zipkins_host, port=9411, endpoint='/api/v2/spans'),  sampler=AlwaysOnSampler(),)
+middleware = FlaskMiddleware(MAIN, exporter = ZipkinExporter(service_name="test_main-api-tracing-automatic-instrumentation",host_name=zipkins_host, port=9411, endpoint='/api/v2/spans'),  sampler=AlwaysOnSampler(),)
 config_integration.trace_integrations(INTEGRATIONS)
 #opencenesus Manual attribute helpers
 HTTP_HOST = attributes_helper.COMMON_ATTRIBUTES['HTTP_HOST']
