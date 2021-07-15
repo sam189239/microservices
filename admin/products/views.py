@@ -72,7 +72,7 @@ class ProductViewSet(viewsets.ViewSet):
                     
 
 
-class UserAPIView(APIView):
+class UserAPIView(viewsets.ViewSet):
     def get_user(self, request):
         users = User.objects.all()
         user = random.choice(users)
