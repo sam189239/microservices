@@ -1,2 +1,2 @@
-export const adminhost="3.134.78.66";
-export const mainhost="18.223.134.248";
+export const adminhost="18.220.175.75";
+export const mainhost="3.14.126.22";
