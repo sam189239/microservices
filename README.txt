@@ -8,7 +8,8 @@ CONTENTS OF THIS FILE
  * Run React App
  * Install SQL-Exporter
  * Install Node-Exporter
- * 
+ * Run Prometheus
+ * Run Grafana
  
  
  Connect to a AWS instance
@@ -116,6 +117,7 @@ sudo systemctl enable node_exporter
 
 
 Monitoring:
+
  Monitoring can be done locally or in another AWS instance. Prometheus runs on the 9090 endpoint and Grafana at 3000. They can be accessed using localhost, 
  if running locally or using the EC2 instance public IP for remote access by single or multiple parties if running on AWS.
  
@@ -144,14 +146,3 @@ Clone the repo and use the dashboards' JSON files in the Grafana Dashboards fold
 Grafana can now be used to monitor the metrics and calculate the SLIs.
 
 
-
-
-
-
-
-
-
-
-
-
- 
