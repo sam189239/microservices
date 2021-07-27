@@ -122,7 +122,7 @@ Monitoring:
  if running locally or using the EC2 instance public IP for remote access by single or multiple parties if running on AWS.
  
  Run Prometheus
------------------------
+-----------------
 Clone the repo and cd in to the prometheus folder.
 Update the Admin and Main app instance IPs in prometheus,yml file.
 Run the command below (It automatically makes use of the prometheus.yml and rules.yml files):
@@ -132,7 +132,7 @@ Run the command below (It automatically makes use of the prometheus.yml and rule
 Prometheus will now start collecting metrics and it can viewed in its UI at http://localhost/9090 or http://<instance-ip>/9090
 
  Run Grafana
------------------------
+---------------
 Install Grafana locally using the instructions in its documentation:
 
 https://grafana.com/docs/grafana/latest/installation/?pg=docs
