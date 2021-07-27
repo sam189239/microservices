@@ -115,6 +115,36 @@ sudo systemctl status node_exporter
 sudo systemctl enable node_exporter
 
 
+Monitoring:
+ Monitoring can be done locally or in another AWS instance. Prometheus runs on the 9090 endpoint and Grafana at 3000. They can be accessed using localhost, 
+ if running locally or using the EC2 instance public IP for remote access by single or multiple parties if running on AWS.
+ 
+ Run Prometheus
+-----------------------
+Clone the repo and cd in to the prometheus folder.
+Update the Admin and Main app instance IPs in prometheus,yml file.
+Run the command below (It automatically makes use of the prometheus.yml and rules.yml files):
+
+./prometheus
+
+Prometheus will now start collecting metrics and it can viewed in its UI at http://localhost/9090 or http://<instance-ip>/9090
+
+ Run Grafana
+-----------------------
+Install Grafana locally using the instructions in its documentation:
+
+https://grafana.com/docs/grafana/latest/installation/?pg=docs
+
+Start grafana-server using:
+
+sudo systemctl start grafana-server
+
+Add prometheus as a datasource using http://localhost/9090 or http://<instance-ip>/9090 as source.
+Clone the repo and use the dashboards' JSON files in the Grafana Dashboards folder to import and create the 4 dashboards on Grafana. 
+Grafana can now be used to monitor the metrics and calculate the SLIs.
+
+
+
 
 
 
