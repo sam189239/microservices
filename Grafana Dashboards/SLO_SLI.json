@@ -953,12 +953,12 @@
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "SLO /  SLI Dashboard",
   "uid": "suhTjzZ7z",
-  "version": 14
+  "version": 15
 }

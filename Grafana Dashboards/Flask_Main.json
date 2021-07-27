@@ -17,7 +17,7 @@
   "gnetId": 9688,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1626692915203,
+  "iteration": 1627359672538,
   "links": [],
   "panels": [
     {
@@ -851,7 +851,7 @@
       }
     }
   ],
-  "refresh": false,
+  "refresh": "",
   "schemaVersion": 30,
   "style": "dark",
   "tags": [
@@ -889,8 +889,8 @@
         "auto_min": "10s",
         "current": {
           "selected": false,
-          "text": "10m",
-          "value": "10m"
+          "text": "1m",
+          "value": "1m"
         },
         "description": null,
         "error": null,
@@ -899,12 +899,12 @@
         "name": "interval",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "1m",
             "value": "1m"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "10m",
             "value": "10m"
           },
@@ -965,7 +965,11 @@
         "datasource": "$datasource",
         "definition": "label_values(app_version_info, pod)",
         "description": null,
-        "error": null,
+        "error": {
+          "data": {
+            "message": "Unexpected error"
+          }
+        },
         "hide": 0,
         "includeAll": true,
         "label": "Pod name",
@@ -995,7 +999,11 @@
         "datasource": "$datasource",
         "definition": "label_values(app_request_latency_seconds_bucket, exported_endpoint)",
         "description": null,
-        "error": null,
+        "error": {
+          "data": {
+            "message": "Unexpected error"
+          }
+        },
         "hide": 0,
         "includeAll": true,
         "label": "Endpoint",
@@ -1025,7 +1033,11 @@
         "datasource": "$datasource",
         "definition": "label_values(app_request_latency_seconds_bucket, method)",
         "description": null,
-        "error": null,
+        "error": {
+          "data": {
+            "message": "Unexpected error"
+          }
+        },
         "hide": 0,
         "includeAll": true,
         "label": "HTTP Method",
@@ -1110,7 +1122,11 @@
         "datasource": "$datasource",
         "definition": "label_values(app_request_count_total, http_status)",
         "description": null,
-        "error": null,
+        "error": {
+          "data": {
+            "message": "Unexpected error"
+          }
+        },
         "hide": 0,
         "includeAll": true,
         "label": "Status code 4xx or 5xx",
@@ -1133,7 +1149,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {

@@ -17,7 +17,7 @@
   "gnetId": 10447,
   "graphTooltip": 0,
   "id": 4,
-  "iteration": 1626694132756,
+  "iteration": 1627359625686,
   "links": [],
   "panels": [
     {
@@ -1104,7 +1104,11 @@
         "datasource": "$datasource",
         "definition": "",
         "description": null,
-        "error": null,
+        "error": {
+          "data": {
+            "message": "Unexpected error"
+          }
+        },
         "hide": 0,
         "includeAll": false,
         "label": "",
@@ -1134,7 +1138,11 @@
         "datasource": "$datasource",
         "definition": "",
         "description": null,
-        "error": null,
+        "error": {
+          "data": {
+            "message": "Unexpected error"
+          }
+        },
         "hide": 0,
         "includeAll": true,
         "label": "app",
@@ -1157,7 +1165,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -1188,5 +1196,5 @@
   "timezone": "",
   "title": "Django App - Admin",
   "uid": "jprTCkZ7k",
-  "version": 4
+  "version": 5
 }

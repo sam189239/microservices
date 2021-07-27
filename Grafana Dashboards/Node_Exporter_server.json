@@ -17,7 +17,7 @@
   "gnetId": 405,
   "graphTooltip": 0,
   "id": 2,
-  "iteration": 1626697418115,
+  "iteration": 1627359703183,
   "links": [],
   "panels": [
     {
@@ -1671,18 +1671,22 @@
         "current": {
           "selected": true,
           "text": [
-            "18.219.62.135:9100",
-            "3.135.223.236:9100"
+            "3.135.223.236:9100",
+            "18.219.62.135:9100"
           ],
           "value": [
-            "18.219.62.135:9100",
-            "3.135.223.236:9100"
+            "3.135.223.236:9100",
+            "18.219.62.135:9100"
           ]
         },
         "datasource": "Prometheus",
         "definition": "",
         "description": null,
-        "error": null,
+        "error": {
+          "data": {
+            "message": "Unexpected error"
+          }
+        },
         "hide": 0,
         "includeAll": false,
         "label": "",
