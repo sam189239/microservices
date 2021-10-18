@@ -5,7 +5,7 @@ django.setup()
 
 from products.models import Product
 
-params1 = pika.URLParameters('amqps://oenwuqee:91pzsvj2f941LHWu7ZY0-L9D5ojQ_v1K@snake.rmq2.cloudamqp.com/oenwuqee?heartbeat=65535')
+params1 = pika.URLParameters('amqps://dcznnvcv:dO7K5YreWZG0ZjUkmuaJAiRwvRAGUH7F@puffin.rmq2.cloudamqp.com/dcznnvcv?heartbeat=65535')
 
 connection = pika.BlockingConnection(params1)
 

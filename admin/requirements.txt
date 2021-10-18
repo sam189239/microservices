@@ -7,3 +7,8 @@ pika==1.1.0
 django-prometheus
 opencensus
 opencensus-ext-zipkin
+opencensus-ext-django
+opencensus-ext-mysql
+opencensus-ext-requests
+opencensus-ext-sqlalchemy
+opencensus-ext-pymysql
